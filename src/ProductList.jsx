@@ -9,6 +9,7 @@ function ProductList({ onHomeClick }) {
    const [showCart, setShowCart] = useState(false);
    const [showPlants, setShowPlants] = useState(true);
    const [addedToCart, setAddedToCart] = useState({});
+   const [itemsInCart, setItemsInCart] = useState(0);
 
    const plantsArray = [
       {
@@ -277,12 +278,13 @@ function ProductList({ onHomeClick }) {
    };
 
    const handleAddToCart = (product) => {
-    dispatch(addItem(product));
-    setAddedToCart((prevState) => ({
-       ...prevState,
-       [product.name]: true,
-    }));
- };
+      dispatch(addItem(product));
+      setAddedToCart((prevState) => ({
+         ...prevState,
+         [product.name]: true,
+      }));
+      setItemsInCart(itemsInCart + 1);
+   };
 
    return (
       <div>
@@ -312,6 +314,9 @@ function ProductList({ onHomeClick }) {
                <div>
                   <a href="#" onClick={handleCartClick} style={styleA}>
                      <h1 className="cart">
+                        <p className="cart_quantity_count">
+                           {itemsInCart ? itemsInCart : ""}
+                        </p>
                         <svg
                            xmlns="http://www.w3.org/2000/svg"
                            viewBox="0 0 256 256"
